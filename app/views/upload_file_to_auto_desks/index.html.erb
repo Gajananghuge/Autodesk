@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Voueps</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Filename</th>
+              <th>View File</th>
+              <th>Uploaded at</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @upload_file_to_auto_desks.each do |upload_file_to_auto_desk| %>
+              <tr>
+                <td><%= upload_file_to_auto_desk.filename %></td>
+                <td><% if upload_file_to_auto_desk.auto_desk_url != nil %>
+                    <a href=<%= '/upload_file_to_auto_desks' + '?urn=' + upload_file_to_auto_desk.auto_desk_url %> style="text-decoration: none">View file</a>
+                  <% elsif upload_file_to_auto_desk.auto_desk_url == nil %>
+                    <%= link_to 'Upload to Autodesk', '#', :onclick=>"uploadFile(#{upload_file_to_auto_desk.id})" %> 
+                  <% elsif upload_file_to_auto_desk.updated_at >  upload_file_to_auto_desk.uploaded_at %>
+                  <%= link_to 'Sync to Autodesk', '#', :onclick=>"uploadFile(#{upload_file_to_auto_desk.id})" %>
+                  <% end %> 
+                </td>
+                <td><%= upload_file_to_auto_desk.uploaded_at %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+          <%= link_to 'Upload file', new_upload_file_to_auto_desk_path, :class=> "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+<script type="text/javascript">
+  function uploadFile(id) {
+    console.log('=======================sjhdsgsagdhjadjhasfdhgsa');
+    console.log(id);
+      $.ajax({
+              type: 'PUT',
+              url: 'upload_file_to_auto_desks/:'+id,
+              data: { "file" : { "id" : id }},
+              success: function (responseData) {
+                  console.log(responseData);
+              }
+          });  
+  }
+</script>

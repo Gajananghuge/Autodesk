@@ -1,0 +1,20 @@
+<%= form_for(@upload_file_to_auto_desk) do |f| %>
+  <% if @upload_file_to_auto_desk.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@upload_file_to_auto_desk.errors.count, "error") %> prohibited this upload_file_to_auto_desk from being saved:</h2>
+
+      <ul>
+      <% @upload_file_to_auto_desk.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.file_field :file %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
